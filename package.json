@@ -1,0 +1,24 @@
+{
+  "name": "midi-simulator",
+  "version": "1.0.0",
+  "description": "MIDI Simulator using Node for Advanced lighting control with MyDMX3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antoinech2/midi-simulator.git"
+  },
+  "author": "antoinech",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antoinech2/midi-simulator/issues"
+  },
+  "homepage": "https://github.com/antoinech2/midi-simulator#readme",
+  "dependencies": {
+    "easymidi": "^3.1.0",
+    "prompt-sync": "^4.2.0"
+  }
+}
