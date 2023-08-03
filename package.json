@@ -19,6 +19,7 @@
   "homepage": "https://github.com/antoinech2/midi-simulator#readme",
   "dependencies": {
     "easymidi": "^3.1.0",
+    "prompt-async": "^0.9.9",
     "prompt-sync": "^4.2.0"
   }
 }
