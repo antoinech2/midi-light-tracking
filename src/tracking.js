@@ -2,7 +2,7 @@ const prompt = require('prompt-async');
 const sprompt = require('prompt-sync')({ sigint: true });
 const { midiOutput, close } = require('./midi')
 
-const lights = require("./data/fixtures.json")
+const lights = require("../data/fixtures.json")
 
 
 async function setupMidiLink() {
