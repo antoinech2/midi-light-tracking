@@ -1,0 +1,14 @@
+[{
+    "name": "Fixture1",
+    "x": -100,
+    "y": 900,
+    "z": 500,
+    "pan": 0,
+    "tilt": 0,
+    "midi": {
+        "pan": 1,
+        "milli_pan": 2,
+        "tilt": 3,
+        "milli_tilt": 4
+    }
+}]
