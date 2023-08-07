@@ -6,12 +6,15 @@ const DEVICE_PORT = "APC MINI"
 const EXIT_NOTE = 0
 const MIDI_MESSAGE_TYPES = ['noteon', 'noteoff', 'cc']
 
-let midiOutput = new easymidi.Output(VIRTUAL_PORT);
-let midiInput = new easymidi.Input(VIRTUAL_PORT);
-let APCIn = new easymidi.Input(DEVICE_PORT);
-let APCOut = new easymidi.Output(DEVICE_PORT);
+let midiPorts = {
+  Output : new easymidi.Output(VIRTUAL_PORT),
+  Input : new easymidi.Input(VIRTUAL_PORT),
+  APCIn : new easymidi.Input(DEVICE_PORT),
+  APCOut : new easymidi.Output(DEVICE_PORT)
+}
 
-function start() {
+
+function startTunnel() {
   
     MIDI_MESSAGE_TYPES.forEach((value) => {
       APCIn.on(value, (msg) => {
@@ -59,22 +62,22 @@ function close(){
   APCOut.close();
 }
 
-exec('exit', (error, stderr) => {
-    if (error) {
-      console.log(`error: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.log(`stderr: ${stderr}`);
-      return;
-    }
+// exec('exit', (error, stderr) => {
+//     if (error) {
+//       console.log(`error: ${error.message}`);
+//       return;
+//     }
+//     if (stderr) {
+//       console.log(`stderr: ${stderr}`);
+//       return;
+//     }
   
-    console.log("Starting");
+//     console.log("Starting");
   
-    console.log("Inputs :", easymidi.getInputs())
-    console.log("Outputs :", easymidi.getOutputs())
+//     console.log("Inputs :", easymidi.getInputs())
+//     console.log("Outputs :", easymidi.getOutputs())
   
-}
-)
+// }
+// )
 
-module.exports = { midiOutput, start, close }
+module.exports = { midiPorts, startTunnel, close }

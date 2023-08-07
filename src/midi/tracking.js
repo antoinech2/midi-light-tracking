@@ -1,29 +1,6 @@
-const prompt = require('prompt-async');
 const sprompt = require('prompt-sync')({ sigint: true });
-const { midiOutput, close } = require('./midi')
-
+const { midiPorts } = require('./midi')
 const lights = require("../data/fixtures.json")
-
-
-async function setupMidiLink() {
-    let finished = false;
-
-    lights.forEach(async (value) => {
-        for (const key in value.midi) {
-            prompt.get([`Assignez le MIDI ${key} du projecteur ${value.name}`], () => { finished = true })
-            while (!finished) {
-                midiOutput.send("cc", {
-                    channel: 1,
-                    value: 100,
-                    controller: value.midi[key]
-                })
-                await sleep(500);
-            }
-            finished = false;
-        }
-    }
-    )
-}
 
 function calculateDmxValue(light, position) {
     let x = -(light.x - position.x)
@@ -61,18 +38,18 @@ function sleep(ms) {
 }
 
 function init(){
-    midiOutput.send("cc", {
+    midiPorts.Output.send("cc", {
         channel: 2,
         value: 0,
         controller: 0
     })
 }
 
-async function track(light, position) {
+async function track(position, light = lights[0]) {
     values = calculateDmxValue(light, position)
     for (const key in light.midi) {
-        console.log(values, values[key], light.midi[key], light.midi)
-        midiOutput.send("cc", {
+        //console.log(values, values[key], light.midi[key], light.midi)
+        midiPorts.Output.send("cc", {
             channel: 1,
             value: values[key],
             controller: light.midi[key]
@@ -90,13 +67,13 @@ async function test(){
     test()
 }
 
-//setupMidiLink()
+module.exports = { track }
 
 //const pos = {x:-200, y:800, z:100}
 //track(lights[0], pos)
 
 
 init()
-test()
-close()
+//test()
+//close()
 
