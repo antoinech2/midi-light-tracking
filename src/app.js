@@ -17,6 +17,8 @@ app.get('/', (req, res) => {
 require('./routes/getFixtures')(app)
 require('./routes/getRoom')(app)
 require('./routes/setTrack')(app)
+require('./routes/updateFixture')(app)
+require('./routes/deleteFixture')(app)
 
 const server = app.listen(port, () => console.log('Application démarrée'))
 

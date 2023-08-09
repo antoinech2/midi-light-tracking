@@ -10,11 +10,18 @@ function calculateDmxValue(light, position) {
     let theta = Math.acos(z / rho) * 180 / Math.PI + light.tilt
     let phi = Math.atan2(y, x) * 180 / Math.PI + light.pan
     let pan = (phi + 180) / 360 * 171
+    let pantrunc = Math.trunc(pan) -1
     let panMidiValue = Math.trunc((phi + 180) / 360 * 127)
-    let milli_pan = Math.round(128 * (pan - Math.trunc(pan)))
+    let realPan = Math.floor(panMidiValue/190*255)
+    let milli_pan
+    if (realPan > pantrunc){
+        milli_pan = 0
+    }
+    else{
+        milli_pan = Math.round(128 * (pan - Math.trunc(pan)))
+    }
     let tilt
     let milli_tilt
-    pan = Math.trunc(pan)
     if (theta < 55) {
         console.log(`Tilt of ${theta}° is unreachable`)
         tilt = 0
@@ -29,7 +36,7 @@ function calculateDmxValue(light, position) {
         milli_tilt = Math.round(127 * (tilt - Math.trunc(tilt)))
     }
     tilt = Math.trunc(tilt)
-    console.log({ phi, theta, pan, milli_pan, tilt, milli_tilt })
+    console.log({ x, y, z, phi, theta, pan, milli_pan, tilt, milli_tilt })
     return { pan : panMidiValue, milli_pan, tilt, milli_tilt }
 }
 

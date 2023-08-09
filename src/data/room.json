@@ -1,10 +1,10 @@
 {
     "room" : {
-        "width" : 1200,
-        "length" : 2000,
+        "width" : 1400,
+        "length" : 2500,
         "height" : 500,
-        "top" : -100,
-        "left" : -600
+        "top" : -300,
+        "left" : -700
     }
 }
 
