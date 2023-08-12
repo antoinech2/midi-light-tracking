@@ -14,11 +14,10 @@ app.get('/', (req, res) => {
     res.json("Ok")
 })
 
-require('./routes/getFixtures')(app)
-require('./routes/getRoom')(app)
-require('./routes/setTrack')(app)
-require('./routes/updateFixture')(app)
-require('./routes/deleteFixture')(app)
+require('./routes/Fixtures')(app)
+require('./routes/Room')(app)
+require('./routes/Track')(app)
+require('./routes/Fixture')(app)
 
 const server = app.listen(port, () => console.log('Application démarrée'))
 
