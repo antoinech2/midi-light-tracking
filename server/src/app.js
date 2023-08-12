@@ -19,12 +19,11 @@ require('./routes/Fixtures')(app)
 require('./routes/Room')(app)
 require('./routes/Track')(app)
 require('./routes/Fixture')(app)
-
+require('./routes/unselect')(app)
 
 const server = app.listen(port, () => {
   console.log('Application démarrée')
-  const url = "http://localhost:"+port+"/tracking"
-  spawn('explorer.exe', [url])
+  //spawn('explorer.exe', ["http://localhost:"+port+"/tracking"])
 })
 
 require('./routes/close')(app, server)
