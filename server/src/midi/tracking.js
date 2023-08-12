@@ -1,14 +1,14 @@
 const sprompt = require('prompt-sync')({ sigint: true });
 const { midiPorts } = require('./midi')
-const lights = require("../data/fixtures.json")
+const fixturesData = require("../data/fixtures.json")
 
 function calculateDmxValue(light, position) {
     let x = -(light.x - position.x)
     let y = -(light.y - position.y)
     let z = -(light.z - position.z)
     let rho = Math.sqrt(x ** 2 + y ** 2 + z ** 2)
-    let theta = Math.acos(z / rho) * 180 / Math.PI + light.tilt
-    let phi = Math.atan2(y, x) * 180 / Math.PI + light.pan
+    let theta = Math.acos(z / rho) * 180 / Math.PI + parseFloat(light.tilt)
+    let phi = Math.atan2(y, x) * 180 / Math.PI + parseFloat(light.pan)
     let pan = (phi + 180) / 360 * 171
     let pantrunc = Math.trunc(pan) -1
     let panMidiValue = Math.trunc((phi + 180) / 360 * 127)
@@ -52,16 +52,22 @@ function init(){
     })
 }
 
-async function track(position, light = lights[0]) {
-    values = calculateDmxValue(light, position)
-    for (const key in light.midi) {
-        //console.log(values, values[key], light.midi[key], light.midi)
-        midiPorts.Output.send("cc", {
-            channel: 1,
-            value: values[key],
-            controller: light.midi[key]
-        })
-        await sleep(2)
+async function track(position, modifId, modifValue, lights = fixturesData) {
+    console.log("\n\n\n\n")
+    for (let [index, light] of lights.entries()){
+        if (index == modifId){
+            light = modifValue
+        }
+        values = calculateDmxValue(light, position)
+        for (const key in light.midi) {
+            //console.log(values, values[key], light.midi[key], light.midi)
+            midiPorts.Output.send("cc", {
+                channel: 1,
+                value: values[key],
+                controller: light.midi[key]
+            })
+            await sleep(2)
+        }
     }
 }
 
