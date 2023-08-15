@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.json("Ok")
 })
 
-app.use('/tracking', express.static('./../public'))
+app.use('/tracking', express.static('./../client/build'))
 
 require('./routes/unselect')(app)
 require('./routes/Fixtures')(app)
