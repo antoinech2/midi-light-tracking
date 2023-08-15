@@ -1,12 +1,12 @@
-const { midiPorts } = require('../midi/midi')
+//const { midiPorts } = require("../midi/tracking")
 
-module.exports = (app, server) => {
+module.exports = (app) => {
     app.put('/api/unselect', (req, res) =>{
-        midiPorts.Output.send("noteon", {
+        app.locals.midiPorts.Output.send("noteon", {
             note: 64,
             velocity: 127,
             channel: 0
         })
-        res.status(200)
+        res.status(200).end()
     })
 }

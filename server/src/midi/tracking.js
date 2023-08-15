@@ -1,6 +1,10 @@
-const sprompt = require('prompt-sync')({ sigint: true });
-const { midiPorts } = require('./midi')
 const fixturesData = require("../../data/fixtures.json")
+
+let midiPorts
+
+function init(ports){
+    midiPorts = ports
+}
 
 function calculateDmxValue(light, position) {
     let x = -(light.x - position.x)
@@ -47,14 +51,6 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function init(){
-    midiPorts.Output.send("cc", {
-        channel: 2,
-        value: 0,
-        controller: 0
-    })
-}
-
 async function track(position, modifId, modifValue, lights = fixturesData) {
     console.log("\n\n\n\n")
     for (let [index, light] of lights.entries()){
@@ -76,22 +72,10 @@ async function track(position, modifId, modifValue, lights = fixturesData) {
     }
 }
 
-async function test(){
-    const x = sprompt("Coord x : ");
-    const y = sprompt("Coord y : ");
-    const z = sprompt("Coord z : ");
-    await track(lights[0], { x, y, z })
-    console.log("Succès !")
-    test()
-}
 
-module.exports = { track }
+module.exports = { track, init, midiPorts }
 
-//const pos = {x:-200, y:800, z:100}
-//track(lights[0], pos)
-
-
-init()
+//init()
 //test()
 //close()
 

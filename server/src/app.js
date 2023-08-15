@@ -1,12 +1,14 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 const {spawn} = require('node:child_process') 
 const port = process.env.PORT || 3001
+const midi = require('../src/midi/midi')
+const trackingInit = require('./midi/tracking').init
 
+const OPEN_AT_LAUNCH = false
 
-app.use(bodyParser.json())
+app.use(express.json())
 .use(cors())
 
 app.get('/', (req, res) => {
@@ -15,15 +17,20 @@ app.get('/', (req, res) => {
 
 app.use('/tracking', express.static('./../public'))
 
+require('./routes/unselect')(app)
 require('./routes/Fixtures')(app)
 require('./routes/Room')(app)
 require('./routes/Track')(app)
 require('./routes/Fixture')(app)
-require('./routes/unselect')(app)
 
-const server = app.listen(port, () => {
+const server = app.listen(port, async () => {
   console.log('Application démarrée')
-  //spawn('explorer.exe', ["http://localhost:"+port+"/tracking"])
+  app.locals.midiPorts = await midi.init()
+  trackingInit(app.locals.midiPorts)
+  if (OPEN_AT_LAUNCH) {
+    spawn('explorer.exe', ["http://localhost:"+port+"/tracking"])
+  }
+  
 })
 
 require('./routes/close')(app, server)

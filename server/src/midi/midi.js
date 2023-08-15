@@ -6,11 +6,31 @@ const DEVICE_PORT = "APC MINI"
 const EXIT_NOTE = 0
 const MIDI_MESSAGE_TYPES = ['noteon', 'noteoff', 'cc']
 
-let midiPorts = {
-  Output: new easymidi.Output(VIRTUAL_PORT),
-  Input: new easymidi.Input(VIRTUAL_PORT),
-  APCIn: new easymidi.Input(DEVICE_PORT),
-  APCOut: new easymidi.Output(DEVICE_PORT)
+const LOOPMIDI_PATH = '"C:/Program Files (x86)/Tobias Erichsen/loopMIDI/loopMIDI.exe"'
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function init() {
+  exec(LOOPMIDI_PATH, async (error, stdout, stderr) => {
+    if (error) {
+      throw new Error('Unable to run virtual midi software. Is it installed on the computer ?\n' + error)
+    }
+  })
+  await sleep(1000)
+  let midiPorts = {
+    Output: new easymidi.Output(VIRTUAL_PORT),
+    Input: new easymidi.Input(VIRTUAL_PORT),
+    APCIn: new easymidi.Input(DEVICE_PORT),
+    APCOut: new easymidi.Output(DEVICE_PORT)
+  }
+  midiPorts.Output.send("cc", {
+    channel: 2,
+    value: 0,
+    controller: 0
+  })
+  return midiPorts
 }
 
 function startTunnel() {
@@ -80,4 +100,4 @@ function close() {
 // )
 
 
-module.exports = { midiPorts, startTunnel, close }
+module.exports = { startTunnel, close, init }
