@@ -1,7 +1,7 @@
 const easymidi = require('easymidi');
 const { exec } = require('child_process');
 
-const VIRTUAL_PORT = "test"
+const VIRTUAL_PORT = "Tracking"
 const DEVICE_PORT = "APC MINI"
 const EXIT_NOTE = 0
 const MIDI_MESSAGE_TYPES = ['noteon', 'noteoff', 'cc']
@@ -22,8 +22,6 @@ async function init() {
   let midiPorts = {
     Output: new easymidi.Output(VIRTUAL_PORT),
     Input: new easymidi.Input(VIRTUAL_PORT),
-    APCIn: new easymidi.Input(DEVICE_PORT),
-    APCOut: new easymidi.Output(DEVICE_PORT)
   }
   midiPorts.Output.send("cc", {
     channel: 2,
@@ -33,52 +31,50 @@ async function init() {
   return midiPorts
 }
 
-function startTunnel() {
+// function startTunnel() {
 
-  MIDI_MESSAGE_TYPES.forEach((value) => {
-    APCIn.on(value, (msg) => {
-      midiPorts.Output.send(value, {
-        note: msg.note,
-        velocity: msg.velocity,
-        channel: msg.channel,
-        value: msg.value,
-        controller: msg.controller
-      })
-      console.log(`Recieved from ${DEVICE_PORT} :`, msg);
-    })
-  })
+//   MIDI_MESSAGE_TYPES.forEach((value) => {
+//     APCIn.on(value, (msg) => {
+//       midiPorts.Output.send(value, {
+//         note: msg.note,
+//         velocity: msg.velocity,
+//         channel: msg.channel,
+//         value: msg.value,
+//         controller: msg.controller
+//       })
+//       console.log(`Recieved from ${DEVICE_PORT} :`, msg);
+//     })
+//   })
 
-  MIDI_MESSAGE_TYPES.forEach((value) => {
-    midiPorts.Input.on(value, (msg) => {
-      APCOut.send(value, {
-        note: msg.note,
-        velocity: msg.velocity,
-        channel: msg.channel,
-        value: msg.value,
-        controller: msg.controller
-      })
-      console.log(`Recieved from ${VIRTUAL_PORT} :`, msg);
-    })
-  })
+//   MIDI_MESSAGE_TYPES.forEach((value) => {
+//     midiPorts.Input.on(value, (msg) => {
+//       APCOut.send(value, {
+//         note: msg.note,
+//         velocity: msg.velocity,
+//         channel: msg.channel,
+//         value: msg.value,
+//         controller: msg.controller
+//       })
+//       console.log(`Recieved from ${VIRTUAL_PORT} :`, msg);
+//     })
+//   })
 
-  //const next = prompt('Appuyez sur une touche pour continuer...');
+//   //const next = prompt('Appuyez sur une touche pour continuer...');
 
 
-  APCIn.on('noteon', (msg) => {
-    if (msg.note == EXIT_NOTE) {
-      close()
-      midivirtual.kill('SIGHUP');
-      console.log("End.");
-    }
-  })
+//   APCIn.on('noteon', (msg) => {
+//     if (msg.note == EXIT_NOTE) {
+//       close()
+//       midivirtual.kill('SIGHUP');
+//       console.log("End.");
+//     }
+//   })
 
-}
+// }
 
 function close() {
   midiPorts.Input.close();
   midiPorts.Ouput.close();
-  midiPorts.APCIn.close();
-  midiPorts.APCOut.close();
 }
 
 // exec('exit', (error, stderr) => {
@@ -100,4 +96,4 @@ function close() {
 // )
 
 
-module.exports = { startTunnel, close, init }
+module.exports = { close, init }
