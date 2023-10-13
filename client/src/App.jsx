@@ -25,6 +25,7 @@ const defaultFixture = {
 
 export default function App() {
   const [coords, setCoords] = useState({x : 0, y : 0, z : 0})
+  const [isPointing, setPointing] = useState(false)
   const [hoverCoords, setHoverCoords] = useState({x : 0, y : 0})
   const [fixtures, setFixtures] = useState([{}])
   const [selectedFixture, setSelectedFixture] = useState()
@@ -53,9 +54,9 @@ export default function App() {
   return (
     <div>
       <Stack spacing={3}>
-        <Header add={addFixture} addAvailability={fixtures[fixtures.length-1]?.isNew || (selectedFixture !== undefined)} coords={coords} hoverCoords={hoverCoords}/>
+        <Header add={addFixture} addAvailability={fixtures[fixtures.length-1]?.isNew || (selectedFixture !== undefined)} coords={coords} hoverCoords={hoverCoords} setPointing={setPointing}/>
         <Stack direction="row" spacing={3}>
-          <Canvas selectedFixture={selectedFixture} selectFixture={setSelectedFixture} fixtures={fixtures} setHoverCoords={setHoverCoords} coords={coords} setCoords={setCoords}/>
+          <Canvas selectedFixture={selectedFixture} selectFixture={setSelectedFixture} fixtures={fixtures} setHoverCoords={setHoverCoords} coords={coords} setCoords={setCoords} setPointing={setPointing} isPointing={isPointing}/>
           <HeightSlider value={coords} setValue = {setCoords}/>
           {
             selectedFixture ? <FixtureCard setFixtures={setFixtures} closeForm={setSelectedFixture} fixture={selectedFixture}/>
