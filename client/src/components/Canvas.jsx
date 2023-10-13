@@ -77,7 +77,7 @@ export default function Canvas({fixtures, coords, setCoords, setHoverCoords, sel
         overflow: "hidden"
       }}>
         {fixtures.map((fixture, index) => (
-          <Fixture select={selectFixture} id={index} key={index} fixture={fixture} displayX={getCanvasCoords({x : fixture.x}).x} displayY={getCanvasCoords({y : fixture.y}).y}/>
+          <Fixture select={selectFixture} isSelected={selectedFixture?.id === index} id={index} key={index} fixture={fixture} displayX={getCanvasCoords({x : fixture.x}).x} displayY={getCanvasCoords({y : fixture.y}).y}/>
         ))}
         {isPointing ? <Pointer displayX={getCanvasCoords({x : coords.x}).x} displayY={getCanvasCoords({y : coords.y}).y}/> : null}
     </Box>

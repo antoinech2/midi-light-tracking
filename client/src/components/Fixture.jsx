@@ -3,7 +3,7 @@ import {Stars as StarsIcon, AddCircleOutline as AddCircleOutlineIcon} from '@mui
 import Tooltip from '@mui/material/Tooltip';
 
 
-export default function Fixture({ id, select, fixture, displayX, displayY, size = 25 }) {
+export default function Fixture({ id, select, fixture, displayX, displayY, isSelected, size = 25 }) {
     const tooltipText = `Name : ${fixture.name}
                         X : ${fixture.x}
                         Y : ${fixture.y}
@@ -24,7 +24,8 @@ export default function Fixture({ id, select, fixture, displayX, displayY, size 
                         top: displayY,
                         left: displayX,
                         fontSize: size,
-                        transform: "translate(-50%, -50%)"
+                        transform: "translate(-50%, -50%)",
+                        color: "orange"
                     }}
                     onContextMenu={(e) => { e.preventDefault(); select({ ...fixture, id }) }} />
                 :
@@ -34,7 +35,8 @@ export default function Fixture({ id, select, fixture, displayX, displayY, size 
                         top: displayY,
                         left: displayX,
                         fontSize: size,
-                        transform: "translate(-50%, -50%)"
+                        transform: "translate(-50%, -50%)",
+                        color: isSelected ? "#76ff03" : "black"
                     }}
                     onContextMenu={(e) => { e.preventDefault(); select({ ...fixture, id }) }} />
 
