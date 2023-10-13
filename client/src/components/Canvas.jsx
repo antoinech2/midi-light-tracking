@@ -7,6 +7,7 @@ import {Box} from '@mui/material/';
 // Project imports
 import ApiService from '../services/api';
 import Fixture from './Fixture';
+import Pointer from './Pointer';
 
 const ROOM = await ApiService.getRoom()
 const LENGTH = window.innerHeight - 100
@@ -65,6 +66,7 @@ export default function Canvas({fixtures, coords, setCoords, setHoverCoords, sel
       onMouseDown={ handleMouseChangeState }
       onMouseUp={ handleMouseChangeState }
       onMouseMove = {handleMouseMove}
+      onContextMenu={(e) => { e.preventDefault(); }} 
       sx={{
         position : "relative",
         margin: "1cm",
@@ -76,6 +78,7 @@ export default function Canvas({fixtures, coords, setCoords, setHoverCoords, sel
         {fixtures.map((fixture, index) => (
           <Fixture select={selectFixture} id={index} key={index} fixture={fixture} displayX={getCanvasCoords({x : fixture.x}).x} displayY={getCanvasCoords({y : fixture.y}).y}/>
         ))}
+        <Pointer displayX={getCanvasCoords({x : coords.x}).x} displayY={getCanvasCoords({y : coords.y}).y}/>
     </Box>
   );
 }
