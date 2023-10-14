@@ -2,11 +2,13 @@ let fixtures = require("../../data/fixtures.json")
 const { getFixtures } = require("../services/Fixtures")
 const fs = require("node:fs")
 
+FIXTURES_PATH = require("../services/files.js").FIXTURES_PATH
+
 module.exports = (app) => {
     app.delete('/api/fixture/:id', (req, res) =>{
         const id = req.params.id
         fixtures.splice(id, 1)
-        fs.writeFile("./src/data/fixtures.json", JSON.stringify(fixtures), (err) => {console.log(err)})
+        fs.writeFile(FIXTURES_PATH, JSON.stringify(fixtures), (err) => {console.log(err)})
         res.json(getFixtures())
     })
     app.put('/api/fixture/:id', (req, res) =>{
@@ -28,7 +30,7 @@ module.exports = (app) => {
         delete newFixture.midiStart
         delete newFixture.midiChannels
         fixtures[id] = {...newFixture, midi}
-        fs.writeFile("./src/data/fixtures.json", JSON.stringify(fixtures), (err) => {console.log(err)})
+        fs.writeFile(FIXTURES_PATH, JSON.stringify(fixtures), (err) => {console.log(err)})
         res.json(getFixtures())
     })
 }
