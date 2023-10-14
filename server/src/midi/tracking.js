@@ -6,6 +6,8 @@ function init(ports){
     midiPorts = ports
 }
 
+const INVERTED_TILT = true
+
 function calculateDmxValue(light, position) {
     let x = -(light.x - position.x)
     let y = -(light.y - position.y)
@@ -13,9 +15,23 @@ function calculateDmxValue(light, position) {
     let rho = Math.sqrt(x ** 2 + y ** 2 + z ** 2)
     let theta = Math.acos(z / rho) * 180 / Math.PI + parseFloat(light.tilt)
     let phi = Math.atan2(y, x) * 180 / Math.PI + parseFloat(light.pan)
-    let pan = (phi + 180) / 360 * 171
-    let pantrunc = Math.trunc(pan) -1
-    let panMidiValue = Math.trunc((phi + 180) / 360 * 127)
+
+    if (INVERTED_TILT){
+        phi = 360 - (phi + 180)
+    }
+    if (phi < 0){
+        phi = 360 + phi
+    }
+    let panMidi = phi / 360 * 127
+    panMidiValue = Math.trunc(panMidi)
+    milli_pan = Math.round(128 * (panMidi - panMidiValue))
+
+/*     let pan = phi / 360 * 171
+    let pantrunc = Math.trunc(pan)
+    let panMidiValue = Math.trunc((phi) / 360 * 127)
+    panMidiValue = 128 - panMidiValue
+
+    pan = 172 - pan
     let realPan = Math.floor(panMidiValue/190*255)
     let milli_pan
     if (realPan > pantrunc){
@@ -27,6 +43,7 @@ function calculateDmxValue(light, position) {
     else{
         milli_pan = Math.round(128 * (pan - Math.trunc(pan)))
     }
+ */    
     let tilt
     let milli_tilt
     if (theta < 55) {
@@ -42,8 +59,14 @@ function calculateDmxValue(light, position) {
         tilt = (theta - 55) / 125 * 128
         milli_tilt = Math.round(127 * (tilt - Math.trunc(tilt)))
     }
+
     tiltMidiValue = Math.trunc(tilt)
-    console.log({ x, y, z, phi, theta, pan, tilt, realPan, realTilt : tiltMidiValue, panMidiValue, milli_pan, tiltMidiValue, milli_tilt })
+//    if (INVERTED_TILT){
+//        tiltMidiValue = 128 - tiltMidiValue
+//        milli_tilt = 128 - milli_tilt
+//    }
+
+    console.log(light.name, { x, y, z, phi, theta, /*pan,*/ tilt, /*realPan,*/ realTilt : tiltMidiValue, panMidiValue, milli_pan, tiltMidiValue, milli_tilt })
     return { pan : panMidiValue, milli_pan, tilt : tiltMidiValue, milli_tilt }
 }
 
