@@ -2,9 +2,6 @@ const easymidi = require('easymidi');
 const { exec } = require('child_process');
 
 const VIRTUAL_PORT = "Tracking"
-const DEVICE_PORT = "APC MINI"
-const EXIT_NOTE = 0
-const MIDI_MESSAGE_TYPES = ['noteon', 'noteoff', 'cc']
 
 const LOOPMIDI_PATH = '"C:/Program Files (x86)/Tobias Erichsen/loopMIDI/loopMIDI.exe"'
 
@@ -30,48 +27,6 @@ async function init() {
   })
   return midiPorts
 }
-
-// function startTunnel() {
-
-//   MIDI_MESSAGE_TYPES.forEach((value) => {
-//     APCIn.on(value, (msg) => {
-//       midiPorts.Output.send(value, {
-//         note: msg.note,
-//         velocity: msg.velocity,
-//         channel: msg.channel,
-//         value: msg.value,
-//         controller: msg.controller
-//       })
-//       console.log(`Recieved from ${DEVICE_PORT} :`, msg);
-//     })
-//   })
-
-//   MIDI_MESSAGE_TYPES.forEach((value) => {
-//     midiPorts.Input.on(value, (msg) => {
-//       APCOut.send(value, {
-//         note: msg.note,
-//         velocity: msg.velocity,
-//         channel: msg.channel,
-//         value: msg.value,
-//         controller: msg.controller
-//       })
-//       console.log(`Recieved from ${VIRTUAL_PORT} :`, msg);
-//     })
-//   })
-
-//   //const next = prompt('Appuyez sur une touche pour continuer...');
-
-
-//   APCIn.on('noteon', (msg) => {
-//     if (msg.note == EXIT_NOTE) {
-//       close()
-//       midivirtual.kill('SIGHUP');
-//       console.log("End.");
-//     }
-//   })
-
-// }
-
 function close() {
   midiPorts.Input.close();
   midiPorts.Ouput.close();
