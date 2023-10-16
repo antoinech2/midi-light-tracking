@@ -27,7 +27,7 @@ function getCanvasCoords(coords){
   }  
 }
 
-export default function Canvas({fixtures, coords, setCoords, setHoverCoords, selectFixture, selectedFixture, setPointing, isPointing}) {
+export default function Canvas({fixtures, coords, setCoords, setHoverCoords, selectFixture, selectedFixture, isPointing}) {
   const refCanvas = useRef()
   
   const [isClicked, setClicked] = useState(false)
@@ -56,9 +56,7 @@ export default function Canvas({fixtures, coords, setCoords, setHoverCoords, sel
 
   function handleClick(e){
     let currentCoords = {...coords, ...getRoomCoords(getInCanvasPosition(e))}
-    setPointing(true)
     setCoords(currentCoords)
-    //ApiService.setTracking(currentCoords, selectedFixture)
   }
 
   return (
@@ -79,7 +77,7 @@ export default function Canvas({fixtures, coords, setCoords, setHoverCoords, sel
         {fixtures.map((fixture, index) => (
           <Fixture select={selectFixture} isSelected={selectedFixture?.id === index} id={index} key={index} fixture={fixture} displayX={getCanvasCoords({x : fixture.x}).x} displayY={getCanvasCoords({y : fixture.y}).y}/>
         ))}
-        {isPointing ? <Pointer displayX={getCanvasCoords({x : coords.x}).x} displayY={getCanvasCoords({y : coords.y}).y}/> : null}
+        <Pointer isPointing={isPointing} displayX={getCanvasCoords({x : coords.x}).x} displayY={getCanvasCoords({y : coords.y}).y}/>
     </Box>
   );
 }

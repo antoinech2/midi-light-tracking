@@ -35,11 +35,13 @@ export default function App() {
   }, []) 
 
   useEffect(() => {
-    if (selectedFixture){
-      ApiService.setTracking(coords, selectedFixture.id, fixtures[selectedFixture.id])
-    }
-    else{
-      ApiService.setTracking(coords)
+    if (isPointing){
+      if (selectedFixture){
+        ApiService.setTracking(coords, selectedFixture.id, fixtures[selectedFixture.id])
+      }
+      else{
+        ApiService.setTracking(coords)
+      }
     }
   }, [coords, fixtures, selectedFixture])
 
@@ -54,10 +56,10 @@ export default function App() {
   return (
     <div>
       <Stack spacing={3}>
-        <Header add={addFixture} addAvailability={fixtures[fixtures.length-1]?.isNew || (selectedFixture !== undefined)} coords={coords} hoverCoords={hoverCoords} setPointing={setPointing}/>
+        <Header add={addFixture} addAvailability={fixtures[fixtures.length-1]?.isNew || (selectedFixture !== undefined)} coords={coords} hoverCoords={hoverCoords} setPointing={setPointing} isPointing={isPointing}/>
         <Stack direction="row" spacing={3}>
-          <Canvas selectedFixture={selectedFixture} selectFixture={setSelectedFixture} fixtures={fixtures} setHoverCoords={setHoverCoords} coords={coords} setCoords={setCoords} setPointing={setPointing} isPointing={isPointing}/>
-          <HeightSlider value={coords} setValue = {setCoords}/>
+          <Canvas selectedFixture={selectedFixture} selectFixture={setSelectedFixture} fixtures={fixtures} setHoverCoords={setHoverCoords} coords={coords} setCoords={setCoords} isPointing={isPointing}/>
+          <HeightSlider value={coords} setValue = {setCoords} isPointing={isPointing}/>
           {
             selectedFixture ? <FixtureCard setFixtures={setFixtures} closeForm={setSelectedFixture} fixture={selectedFixture}/>
             : null

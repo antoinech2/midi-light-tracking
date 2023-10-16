@@ -10,19 +10,20 @@ const Input = styled(MuiInput)`
   width: 75px;
 `;
 
-export default function InputSlider({value, setValue}) {
+export default function InputSlider({value, setValue, isPointing}) {
 
     const handleSliderChange = (event, newValue) => {
         let newCoords = {...value, z : newValue}
         setValue(newCoords);
-        ApiService.setTracking(newCoords)
+        if (isPointing){
+            ApiService.setTracking(newCoords)
+        }
     };
 
     const handleInputChange = (event) => {
         let z = (event.target.value === '' ? '' : Number(event.target.value))
         let newCoords = {...value, z : z}
         setValue(newCoords);
-        //ApiService.setTracking(newCoords)
     };
 
     const handleBlur = () => {
