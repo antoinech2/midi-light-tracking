@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 
 // MUI imports
 import {Card, CardActions, CardContent, CardHeader, 
-    Stack, TextField, InputAdornment, Button} from '@mui/material/';
+    Stack, TextField, InputAdornment, Button, Checkbox, FormControlLabel} from '@mui/material/';
 import {Check as CheckIcon, Close as CloseIcon, 
         Visibility as VisibilityIcon, VisibilityOff as VisibilityOffIcon} from '@mui/icons-material/';
 
@@ -26,7 +26,7 @@ export default function FixtureCard({ setFixtures, fixture, closeForm }) {
     async function handleSubmit(e){
         e.preventDefault()
         const formValues = e.target
-        const newFixture = {...fixture, x : formValues.x.value, y:formValues.y.value, z:formValues.z.value, pan:formValues.pan.value, tilt:formValues.tilt.value, name:formValues.name.value, midiStart:formValues.midiStart.value, midiChannels:formValues.midiChannels.value}
+        const newFixture = {...fixture, x : formValues.x.value, y:formValues.y.value, z:formValues.z.value, pan:formValues.pan.value, tilt:formValues.tilt.value, inverted_pan:formValues.inverted_pan.checked, inverted_tilt:formValues.inverted_tilt.checked, name:formValues.name.value, midiStart:formValues.midiStart.value, midiChannels:formValues.midiChannels.value}
         delete newFixture.isNew
         setFixtures(await ApiService.updateFixture(newFixture))
         closeForm()
@@ -43,7 +43,7 @@ export default function FixtureCard({ setFixtures, fixture, closeForm }) {
     }
 
     function handleInputChange(e){
-        const newFixture = {...currentFixture, [e.target.name] : e.target.value}
+        const newFixture = {...currentFixture, [e.target.name] : (e.target.type === "checkbox" ? e.target.checked : e.target.value)}
         setCurrentFixture(newFixture)
         if (visualize){
             UpdateFixtures(newFixture)
@@ -180,6 +180,22 @@ export default function FixtureCard({ setFixtures, fixture, closeForm }) {
                                 step : 0.05,
                             }}
                         />
+                    </Stack>
+                    <Stack direction="row" spacing={2} mb={2}>
+                        <FormControlLabel control={
+                            <Checkbox 
+                            name='inverted_pan'
+                            onChange={(e) => {handleInputChange(e)}}
+                            defaultChecked={fixture.inverted_pan}
+                            />
+                        } label="Inversed pan" />
+                        <FormControlLabel control={
+                            <Checkbox 
+                            name='inverted_tilt'
+                            onChange={(e) => {handleInputChange(e)}}
+                            defaultChecked={fixture.inverted_tilt}
+                            />
+                        } label="Inversed tilt" />
                     </Stack>
                     <Stack direction="row" spacing={2}>
                         <TextField

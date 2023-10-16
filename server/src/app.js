@@ -6,7 +6,7 @@ const port = process.env.PORT || 3001
 const midi = require('../src/midi/midi')
 const trackingInit = require('./midi/tracking').init
 
-const OPEN_AT_LAUNCH = true
+const OPEN_AT_LAUNCH = false
 
 app.use(express.json())
 .use(cors())

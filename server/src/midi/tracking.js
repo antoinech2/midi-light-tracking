@@ -6,8 +6,6 @@ function init(ports){
     midiPorts = ports
 }
 
-const INVERTED_TILT = true
-
 function calculateDmxValue(light, position) {
     let x = -(light.x - position.x)
     let y = -(light.y - position.y)
@@ -16,34 +14,22 @@ function calculateDmxValue(light, position) {
     let theta = Math.acos(z / rho) * 180 / Math.PI + parseFloat(light.tilt)
     let phi = Math.atan2(y, x) * 180 / Math.PI + parseFloat(light.pan)
 
-    if (INVERTED_TILT){
-        phi = 360 - (phi + 180)
+    if (light.inverted_pan){
+        phi = 180 - phi
+    }
+    else {
+        phi += 180
+    }
+    if (light.inverted_tilt){
+        phi -= 180
     }
     if (phi < 0){
-        phi = 360 + phi
+        phi += 360
     }
     let panMidi = phi / 360 * 127
     panMidiValue = Math.trunc(panMidi)
     milli_pan = Math.round(128 * (panMidi - panMidiValue))
 
-/*     let pan = phi / 360 * 171
-    let pantrunc = Math.trunc(pan)
-    let panMidiValue = Math.trunc((phi) / 360 * 127)
-    panMidiValue = 128 - panMidiValue
-
-    pan = 172 - pan
-    let realPan = Math.floor(panMidiValue/190*255)
-    let milli_pan
-    if (realPan > pantrunc){
-        milli_pan = 0
-    }
-    else if (realPan < pantrunc){
-        milli_pan = 127
-    }
-    else{
-        milli_pan = Math.round(128 * (pan - Math.trunc(pan)))
-    }
- */    
     let tilt
     let milli_tilt
     if (theta < 55) {
@@ -61,10 +47,6 @@ function calculateDmxValue(light, position) {
     }
 
     tiltMidiValue = Math.trunc(tilt)
-//    if (INVERTED_TILT){
-//        tiltMidiValue = 128 - tiltMidiValue
-//        milli_tilt = 128 - milli_tilt
-//    }
 
     console.log(light.name, { x, y, z, phi, theta, /*pan,*/ tilt, /*realPan,*/ realTilt : tiltMidiValue, panMidiValue, milli_pan, tiltMidiValue, milli_tilt })
     return { pan : panMidiValue, milli_pan, tilt : tiltMidiValue, milli_tilt }
@@ -97,8 +79,4 @@ async function track(position, modifId, modifValue, lights = fixturesData) {
 
 
 module.exports = { track, init, midiPorts }
-
-//init()
-//test()
-//close()
 
