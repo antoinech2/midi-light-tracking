@@ -1,1 +1,98 @@
-[{"name":"AFX 1","x":"-346","y":"0","z":"400","pan":"-0.55","tilt":"-2.35","midi":{"pan":21,"milli_pan":22,"tilt":23,"milli_tilt":24}},{"name":"AFX 2","x":"-198","y":"0","z":"400","pan":"-4.4","tilt":"-1.7","midi":{"pan":17,"milli_pan":18,"tilt":19,"milli_tilt":20}},{"name":"AFX 3","x":"-55","y":"0","z":"400","pan":"-4.45","tilt":"-1.25","midi":{"pan":13,"milli_pan":14,"tilt":15,"milli_tilt":16}},{"name":"AFX 4","x":"81","y":"0","z":"400","pan":"-2.6","tilt":"-1.4","midi":{"pan":9,"milli_pan":10,"tilt":11,"milli_tilt":12}},{"name":"AFX 5","x":"228","y":"0","z":"400","pan":"-5.95","tilt":"-5.8","midi":{"pan":5,"milli_pan":6,"tilt":7,"milli_tilt":8}},{"name":"AFX 6","x":"333","y":"0","z":"400","pan":"0","tilt":"-1.95","midi":{"pan":1,"milli_pan":2,"tilt":3,"milli_tilt":4}}]
+[
+    {
+        "name": "AFX 1",
+        "x": "-346",
+        "y": "0",
+        "z": "400",
+        "pan": "-0.55",
+        "tilt": "-2.35",
+        "inverted_pan": true,
+        "inverted_tilt": false,
+        "midi": {
+            "pan": 21,
+            "milli_pan": 22,
+            "tilt": 23,
+            "milli_tilt": 24
+        }
+    },
+    {
+        "name": "AFX 2",
+        "x": "-198",
+        "y": "0",
+        "z": "400",
+        "pan": "-4.4",
+        "tilt": "-1.7",
+        "inverted_pan": true,
+        "inverted_tilt": false,
+        "midi": {
+            "pan": 17,
+            "milli_pan": 18,
+            "tilt": 19,
+            "milli_tilt": 20
+        }
+    },
+    {
+        "name": "AFX 3",
+        "x": "-55",
+        "y": "0",
+        "z": "400",
+        "pan": "-4.45",
+        "tilt": "-1.25",
+        "inverted_pan": true,
+        "inverted_tilt": false,
+        "midi": {
+            "pan": 13,
+            "milli_pan": 14,
+            "tilt": 15,
+            "milli_tilt": 16
+        }
+    },
+    {
+        "name": "AFX 4",
+        "x": "81",
+        "y": "0",
+        "z": "400",
+        "pan": "-2.6",
+        "tilt": "-1.4",
+        "inverted_pan": true,
+        "inverted_tilt": false,
+        "midi": {
+            "pan": 9,
+            "milli_pan": 10,
+            "tilt": 11,
+            "milli_tilt": 12
+        }
+    },
+    {
+        "name": "AFX 5",
+        "x": "228",
+        "y": "0",
+        "z": "400",
+        "pan": "-5.95",
+        "tilt": "-5.8",
+        "inverted_pan": true,
+        "inverted_tilt": false,
+        "midi": {
+            "pan": 5,
+            "milli_pan": 6,
+            "tilt": 7,
+            "milli_tilt": 8
+        }
+    },
+    {
+        "name": "AFX 6",
+        "x": "333",
+        "y": "0",
+        "z": "400",
+        "pan": "0",
+        "tilt": "-1.95",
+        "inverted_pan": true,
+        "inverted_tilt": true,
+        "midi": {
+            "pan": 1,
+            "milli_pan": 2,
+            "tilt": 3,
+            "milli_tilt": 4
+        }
+    }
+]

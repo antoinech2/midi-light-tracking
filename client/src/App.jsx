@@ -10,6 +10,7 @@ import Canvas from './components/Canvas'
 import Header from './components/Header';
 import HeightSlider from './components/HeightSlider'
 import FixtureCard from './components/FixtureCard';
+import SideSelector from './components/SideSelector';
 
 
 const defaultFixture = {
@@ -43,7 +44,7 @@ export default function App() {
         ApiService.setTracking(coords)
       }
     }
-  }, [coords, fixtures, selectedFixture])
+  }, [coords, fixtures, selectedFixture, isPointing])
 
   function addFixture(){
     setFixtures(() => {
@@ -60,6 +61,7 @@ export default function App() {
         <Stack direction="row" spacing={3}>
           <Canvas selectedFixture={selectedFixture} selectFixture={setSelectedFixture} fixtures={fixtures} setHoverCoords={setHoverCoords} coords={coords} setCoords={setCoords} isPointing={isPointing}/>
           <HeightSlider value={coords} setValue = {setCoords} isPointing={isPointing}/>
+          <SideSelector lightNumber={fixtures.length}/>
           {
             selectedFixture ? <FixtureCard setFixtures={setFixtures} closeForm={setSelectedFixture} fixture={selectedFixture}/>
             : null

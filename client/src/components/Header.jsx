@@ -13,9 +13,6 @@ export default function Header({coords, hoverCoords, add, addAvailability, setPo
         if (isPointing){
             ApiService.unselect()
         }
-        else {
-            ApiService.setTracking(coords)
-        }
         setPointing(!isPointing)
     }
 

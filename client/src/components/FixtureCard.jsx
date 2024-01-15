@@ -81,7 +81,6 @@ export default function FixtureCard({ setFixtures, fixture, closeForm }) {
                     label="Fixture name"
                     defaultValue={fixture.name}
                     sx={{ m: 1}}
-                    //onChange={(e) => {handleInputChange(e)}}
                 />
                 }
                 action={<RemoveFixture onConfirm={handleRemove} />}>
