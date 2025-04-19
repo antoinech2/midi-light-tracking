@@ -31,6 +31,7 @@ export default function Canvas({fixtures, coords, setCoords, setHoverCoords, sel
   const refCanvas = useRef()
   
   const [isClicked, setClicked] = useState(false)
+  console.log("Canvas", fixtures)
 
   function getInCanvasPosition(e){
     return {x : e.clientX - refCanvas.current.offsetLeft,

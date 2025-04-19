@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3001"
+const API_URL = "http://localhost:3003"
 
 let lastClickTime = Date.now()
 const TRACKING_COOLDOWN = 50

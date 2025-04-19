@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const {spawn} = require('node:child_process') 
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3003
 const midi = require('../src/midi/midi')
 const trackingInit = require('./midi/tracking').init
 
